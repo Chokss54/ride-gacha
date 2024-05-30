@@ -1,12 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
+import InputContainer from './components/InputContainer';
+import UserType from './enum/UserType';
+import Drivers from './model/Drivers';
+import Passengers from './model/Passengers';
 
 const App: React.FC = () => {
+  const [drivers] = useState(new Drivers());
+  const [passengers] = useState(new Passengers());
+  const [, setUpdate] = useState({});
+
+  const handleAddUser = (userType: UserType, name: string, address: string) => {
+    if (userType === UserType.driver) {
+      drivers.addDriver(name, address);
+    } else if (userType === UserType.passenger) {
+      passengers.addPassenger(name, address);
+    }
+    setUpdate({}); // Force update the component
+  };
+
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
-      <h1 className="text-3xl font-bold text-blue-500">
-        Hello, React with TypeScript and Tailwind CSS!
-      </h1>
+    <div>
+      <InputContainer userType={UserType.driver} onAddUser={handleAddUser} ></InputContainer>
+      <InputContainer userType={UserType.passenger} onAddUser={handleAddUser} ></InputContainer>
+      <button>Generate</button>
     </div>
+    
   );
 }
 
