@@ -1,40 +1,51 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import InputForm from './components/InputForm';
-import DropdownList from './components/DropwdownList';
-import DisplayContainer from './components/DisplayContainer';
 import Driver from './model/Driver';
 import Passenger from './model/Passenger';
 import DisplayIntroContainer from './components/DisplayIntroContainer';
+import DisplayListContainer from './components/DisplayListContainer';
 
 const App: React.FC = () => {
   // TODO: replace dummy data after logic implemented
-  const [drivers, setDrivers] = useState<Driver[]>([
-    Driver.new('John Do', '123 Main St'),
-    Driver.new('Jane Smith', '456 Oak Ave'),
-    Driver.new('Mike Johnson', '789 Pine Rd'),
-  ]);
-  const [passengers, setPassengers] = useState<Passenger[]>([
-    Passenger.new('John Doe', '123 Main St'),
-    Passenger.new('Jane Smith', '456 Oak Ave'),
-    Passenger.new('Mike Johnson', '789 Pine Rd'),
-    Passenger.new('John Doe', '123 Main St'),
-    Passenger.new('Jane Smith', '456 Oak Ave'),
-    Passenger.new('Mike Johnson', '789 Pine Rd'),
-    Passenger.new('John Doe', '123 Main St'),
-    Passenger.new('Jane Smith', '456 Oak Ave'),
-    Passenger.new('Mike Johnson', '789 Pine Rd'),
-    Passenger.new('John Doe', '123 Main St'),
-    Passenger.new('Jane Smith', '456 Oak Ave'),
-    Passenger.new('Mike Johnson', '789 Pine Rd'),
-    Passenger.new('John Doe', '123 Main St'),
-    Passenger.new('Jane Smith', '456 Oak Ave'),
-    Passenger.new('Mike Johnson', '789 Pine Rd'),
-  ]);
+  const [drivers, setDrivers] = useState<Driver[]>([]);
+  const [passengers, setPassengers] = useState<Passenger[]>([]);
   const [, setUpdate] = useState({});
 
-  const handleAddUser = (name: string, address: string) => {
+  const [nameIsValid, setNameIsValid] = useState(true);
+  const [addressIsValid, setAddressIsValid] = useState(true);
+
+  useEffect(()=>{
+    setDrivers(prevDrivers => [...prevDrivers]);
+  }, []);
+
+  const handleAddUser = (name: string, address: string, userType: string) => {
+    //TODO: create new user and add it to Drivers & Passengers list
+    console.log(name, address, userType);
+    if (validateForm(name, address)) {
+      // check user type from dropdown list
+      if (userType.toLowerCase() === "driver") {
+        const newDriver = Driver.new(name, address);
+        setDrivers(prevDrivers => [...prevDrivers, newDriver]);
+      } else {
+        const newPassenger = Passenger.new(name, address);
+        setPassengers(prevPassengers => [...prevPassengers, newPassenger]);
+      };
+
+      // create new user to each array
+    };
+    
     setUpdate({}); // Force update the component
   };
+
+  const validateForm = (name: string, address: string) => {
+    if (name.length === 0) {
+      return setNameIsValid(false);
+    };
+    if (address.length === 0) {
+      return setAddressIsValid(false);
+    };
+    return true;
+  }; 
 
   return (
     <div className='px-8 pt-8 pb-8 2xl:px-60 '>
@@ -46,8 +57,8 @@ const App: React.FC = () => {
         <InputForm onAddUser={handleAddUser}></InputForm>
       </div>
       <div className=' flex flex-col lg:flex-row'>
-        <DisplayContainer titleContainer='Driver List' userList={drivers}></DisplayContainer>
-        <DisplayContainer titleContainer='Passenger List' userList={passengers}></DisplayContainer>
+        <DisplayListContainer titleContainer='Driver List' userList={drivers}/>
+        <DisplayListContainer titleContainer='Passenger List' userList={passengers}/>
       </div>
       <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
         Sort Users
