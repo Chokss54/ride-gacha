@@ -1,12 +1,12 @@
-import Driver from "../model/Driver";
+
 import User from "../model/User";
 
-interface DisplayContainerProps {
+interface DisplayListContainerProps {
   titleContainer?: string;
   userList: User[]
 }
 
-const DisplayContainer: React.FC<DisplayContainerProps> = ({ titleContainer, userList }) => {
+const DisplayListContainer: React.FC<DisplayListContainerProps> = ({ titleContainer, userList }) => {
 
 
   return (
@@ -20,7 +20,7 @@ const DisplayContainer: React.FC<DisplayContainerProps> = ({ titleContainer, use
       </div>
       <div className="w-auto h-48 overflow-y-auto bg-gray-100 p-4 border border-gray-300 rounded-lg lg:w-96">
         {userList.length === 0 ? (
-          <p className="text-center text-gray-500 font-poppins">No items available</p>
+          <p className="text-center text-gray-500 font-poppins">No items added</p>
         ) : (
           userList.map((item, index) => (
             <div key={index} className="font-poppins p-2 border-b border-gray-300">
@@ -33,4 +33,4 @@ const DisplayContainer: React.FC<DisplayContainerProps> = ({ titleContainer, use
   );
 };
 
-export default DisplayContainer;
+export default DisplayListContainer;
