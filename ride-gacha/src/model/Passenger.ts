@@ -4,7 +4,7 @@ import UserType from "../enum/UserType";
 class Passenger extends User {
   public readonly userType: UserType = UserType.passenger
 
-  public static new(name: string, address: string): Passenger {
+  public static new(name: string, address:  google.maps.places.PlaceResult | null): Passenger {
     return new Passenger(name, address);
   }
 }

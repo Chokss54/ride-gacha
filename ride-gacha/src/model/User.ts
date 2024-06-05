@@ -1,19 +1,19 @@
 abstract class User {
   protected _name: string;
-  protected _address: string;
-  
+  protected _address: google.maps.places.PlaceResult | null; // Change the type to PlaceResult | null
+
   public get name(): string {
     return this._name;
   }
 
-  public get address(): string {
+  public get address():  google.maps.places.PlaceResult | null {
     return this._address;
   }
 
   constructor(
     name: string,
-    address: string,
-) {
+    address:  google.maps.places.PlaceResult | null, // Change the type to PlaceResult | null
+  ) {
     this._name = name;
     this._address = address;
   }
@@ -22,7 +22,7 @@ abstract class User {
     this._name = name;
   }
 
-  public set address(address: string) {
+  public set address(address:  google.maps.places.PlaceResult | null) {
     this._address = address;
   }
 }
