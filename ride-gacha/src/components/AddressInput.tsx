@@ -9,9 +9,16 @@ const libraries: Libraries = ["places"];
 const AddressInput: React.FC<AutoCompleteProps> = ({ onPlaceSelected }) => {
   const autoCompleteRef = useRef<google.maps.places.Autocomplete>();
   const inputRef = useRef<HTMLInputElement>(null);
+  const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
+  console.log('API Key:', apiKey);
+
+  if (!apiKey) {
+    throw new Error("REACT_APP_GOOGLE_API_KEY is not defined in the environment variables");
+  }
+
 
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyBRqPOcu4QC7LJkBxYv5-Q-zXWgFc-d0pM",
+    googleMapsApiKey: apiKey,
     libraries,
   });
 

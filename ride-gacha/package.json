@@ -47,6 +47,7 @@
   },
   "devDependencies": {
     "@types/google.maps": "^3.55.9",
+    "dotenv": "^16.4.5",
     "expo-module-scripts": "^3.5.2",
     "typescript": "^5.4.5"
   }
