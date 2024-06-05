@@ -18,7 +18,7 @@ const App: React.FC = () => {
     setDrivers(prevDrivers => [...prevDrivers]);
   }, []);
 
-  const handleAddUser = (name: string, address: string, userType: string) => {
+  const handleAddUser = (name: string, address: google.maps.places.PlaceResult, userType: string) => {
     //TODO: create new user and add it to Drivers & Passengers list
     console.log(name, address, userType);
     if (validateForm(name, address)) {
@@ -37,11 +37,11 @@ const App: React.FC = () => {
     setUpdate({}); // Force update the component
   };
 
-  const validateForm = (name: string, address: string) => {
+  const validateForm = (name: string, address: google.maps.places.PlaceResult) => {
     if (name.length === 0) {
       return setNameIsValid(false);
     };
-    if (address.length === 0) {
+    if (address === null) {
       return setAddressIsValid(false);
     };
     return true;

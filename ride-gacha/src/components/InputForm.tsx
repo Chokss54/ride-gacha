@@ -1,22 +1,27 @@
 import React, { useState } from 'react';
 import UserType from "../enum/UserType";
 import DropdownList from './DropwdownList';
+import AddressInput from './AddressInput';
 
 interface InputFormProps {
-  onAddUser: (name: string, address: string, userType: string) => void;
+  onAddUser: (name: string, address: google.maps.places.PlaceResult, userType: string) => void;
 }
 
 const InputForm: React.FC<InputFormProps> = ({ onAddUser }) => {
   const [name, setName] = useState<string>('');
-  const [address, setAddress] = useState<string>('');
+  const [address, setAddress] = useState<google.maps.places.PlaceResult | null>(null);
   const [userType, setUserType] = useState<string>('');
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
+    console.log(e.target.value);
   };
 
-  const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAddress(e.target.value);
+  const handleAddressChange = (place: google.maps.places.PlaceResult) => {
+    if (place) {
+      setAddress(place);
+      console.log(place);
+    }
   };
 
   const handleUserTypeSelect = (selectedUserType: string) => {
@@ -25,10 +30,10 @@ const InputForm: React.FC<InputFormProps> = ({ onAddUser }) => {
   };
 
   const onAddClick: React.ComponentProps<"button">["onClick"] = (e) => {
-    if (name.trim() !== '' && address.trim() !== '' && userType !== '') {
+    if (name.trim() !== '' && address !== null  && userType !== '') {
       onAddUser(name, address, userType);
       setName('');
-      setAddress('');
+      setAddress(null);
     } else {
       alert("Please fill in all the fields");
     }
@@ -57,14 +62,7 @@ const InputForm: React.FC<InputFormProps> = ({ onAddUser }) => {
         <label className="block text-gray-700 text-lg font-bold mb-2 font-poppins">
           Address
         </label>
-        <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline font-poppins"
-          id="address"
-          type="text"
-          placeholder="Please enter your address"
-          value={address}
-          onChange={handleAddressChange}
-        />
+        <AddressInput onPlaceSelected={handleAddressChange} />
       </div>
       <button
         className="font-poppins bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
