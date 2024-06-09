@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
-import UserType from "../enum/UserType";
 import DropdownList from "./DropdownList";
 import { useLoadScript, Libraries } from "@react-google-maps/api";
+import Address from "../model/Address";
 
 interface InputFormProps {
-  onAddUser: (name: string, address: google.maps.places.PlaceResult, userType: string) => void;
+  onAddUser: (name: string, address: Address, userType: string) => void;
 }
 const libraries: Libraries = ["places"];
 
 const InputForm: React.FC<InputFormProps> = ({ onAddUser }) => {
   const [name, setName] = useState<string>('');
   const [addressName, setAddressName] = useState<string>('');
-  const [address, setAddress] = useState<google.maps.places.PlaceResult | null>(null);
+  const [address, setAddress] = useState<Address | null>(null);
   const [userType, setUserType] = useState<string>('');
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,7 +19,8 @@ const InputForm: React.FC<InputFormProps> = ({ onAddUser }) => {
   };
 
   const handleAddressChange = (place: google.maps.places.PlaceResult, value: string) => {
-    setAddress(place);
+    const newAddress = new Address(place);
+    setAddress(newAddress);
     setAddressName(value);
   };
 

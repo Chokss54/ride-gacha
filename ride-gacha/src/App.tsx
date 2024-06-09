@@ -4,6 +4,7 @@ import Driver from './model/Driver';
 import Passenger from './model/Passenger';
 import DisplayIntroContainer from './components/DisplayIntroContainer';
 import DisplayListContainer from './components/DisplayListContainer';
+import Address from './model/Address';
 
 const App: React.FC = () => {
   // TODO: replace dummy data after logic implemented
@@ -18,7 +19,7 @@ const App: React.FC = () => {
     setDrivers(prevDrivers => [...prevDrivers]);
   }, []);
 
-  const handleAddUser = (name: string, address: google.maps.places.PlaceResult, userType: string) => {
+  const handleAddUser = (name: string, address: Address, userType: string) => {
     //TODO: create new user and add it to Drivers & Passengers list
     console.log(name, address, userType);
     if (validateForm(name, address)) {
@@ -37,7 +38,7 @@ const App: React.FC = () => {
     setUpdate({}); // Force update the component
   };
 
-  const validateForm = (name: string, address: google.maps.places.PlaceResult) => {
+  const validateForm = (name: string, address: Address) => {
     if (name.length === 0) {
       return setNameIsValid(false);
     };

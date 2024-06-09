@@ -1,9 +1,10 @@
 import Passenger from "./Passenger";
+import Address from "./Address";
 
 export class Passengers {
   private drivers: Passenger[] = [];
 
-  addPassenger(name: string, address:  google.maps.places.PlaceResult | null) {
+  addPassenger(name: string, address:  Address | null) {
     const newDriver = new Passenger(name, address);
     this.drivers.push(newDriver);
   }
